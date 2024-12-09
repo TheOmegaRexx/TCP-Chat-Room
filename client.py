@@ -48,4 +48,4 @@ receive_thread = threading.Thread(target=receive)
 receive_thread.start()
 
 # Create a thread for writing and sending messages
-write
+write()
