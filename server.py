@@ -13,11 +13,15 @@ clients = []  # List to store connected clients
 nicknames = []  # List to store nicknames of the connected clients
 
 # Function to broadcast messages to all connected clients
+
+
 def broadcast(message):
     for client in clients:
         client.send(message)
 
 # Function to handle communication with each client
+
+
 def handle(client):
     while True:
         try:
@@ -26,16 +30,21 @@ def handle(client):
             broadcast(message)  # Broadcast the message to all other clients
         except:
             # Handle client disconnections
-            index = clients.index(client)  # Find the index of the disconnected client
-            clients.remove(client)  # Remove the client from the list of connected clients
+            # Find the index of the disconnected client
+            index = clients.index(client)
+            # Remove the client from the list of connected clients
+            clients.remove(client)
             client.close()  # Close the connection to the client
-            nickname = nicknames[index]  # Get the nickname of the disconnected client
+            # Get the nickname of the disconnected client
+            nickname = nicknames[index]
             nicknames.remove(nickname)  # Remove the nickname from the list
             # Broadcast a message notifying other clients of the disconnection
             broadcast(f'{nickname} left the chat!'.encode('ascii'))
             break
 
 # Function to receive new client connections
+
+
 def receive():
     while True:
         # Accept new client connections
@@ -44,9 +53,11 @@ def receive():
 
         # Send a prompt asking for a nickname
         client.send("NICK".encode("ascii"))
-        nickname = client.recv(1024).decode("ascii")  # Receive the nickname from the client
+        # Receive the nickname from the client
+        nickname = client.recv(1024).decode("ascii")
         nicknames.append(nickname)  # Add the nickname to the list of nicknames
-        clients.append(client)  # Add the client to the list of connected clients
+        # Add the client to the list of connected clients
+        clients.append(client)
 
         print(f"Nickname of the client is {nickname}!")
         # Broadcast a message that a new client has joined the chat
