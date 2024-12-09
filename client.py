@@ -11,12 +11,14 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(("127.0.0.1", 44444))
 
 # Function to handle receiving messages from the server
+
+
 def receive():
     while True:
         try:
             # Receive message from server and decode it
             message = client.recv(1024).decode("ascii")
-            
+
             # Check if the message is asking for a nickname, in which case we do nothing
             if message == "NICK":
                 pass
@@ -30,13 +32,16 @@ def receive():
             break
 
 # Function to handle sending messages to the server
+
+
 def write():
     while True:
         # Format the message to include the nickname
         message = f"{nickname}: {input('')}"
-        
+
         # Send the formatted message to the server
         client.send(message.encode("ascii"))
+
 
 # Create a thread for receiving messages
 receive_thread = threading.Thread(target=receive)
